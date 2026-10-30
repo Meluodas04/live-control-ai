@@ -1,0 +1,20 @@
+const $ = id => document.getElementById(id);
+let stats={comments:0,gifts:0,people:new Set(),points:{}};
+let secret=Math.floor(Math.random()*5)+1;
+const samples=["OI","BOM DIA","SEGUE","QUERO JOGAR","SALVE"];
+const replies={"OI":"Seja muito bem-vindo à demonstração! ❤️","BOM DIA":"Bom dia! Que seu dia seja incrível! ☀️","SEGUE":"Obrigado pelo carinho e por acompanhar!","QUERO JOGAR":"Bora jogar! Escolha um número de 1 a 5."};
+function addLog(message){const box=$("log");const empty=box.querySelector(".empty");if(empty)empty.remove();const p=document.createElement("p");p.className="log-item";const time=document.createElement("time");time.textContent=new Date().toLocaleTimeString("pt-BR");p.append(time,document.createTextNode(" "+message));box.prepend(p);}
+function update(){ $("commentsCount").textContent=stats.comments;$("giftsCount").textContent=stats.gifts;$("peopleCount").textContent=stats.people.size;$("pointsCount").textContent=Object.values(stats.points).reduce((a,b)=>a+b,0);renderRanking();}
+function addPoints(name,points){stats.people.add(name);stats.points[name]=(stats.points[name]||0)+points;update();}
+function renderRanking(){const list=$("ranking");list.innerHTML="";const entries=Object.entries(stats.points).sort((a,b)=>b[1]-a[1]).slice(0,10);if(!entries.length){list.innerHTML='<li class="empty">Ainda não há participantes.</li>';return;}entries.forEach(([name,points])=>{const li=document.createElement("li");li.textContent=name;const span=document.createElement("span");span.textContent=points+" pts";li.append(span);list.append(li);});}
+function beep(freq=660,duration=.14){if(!$("sounds").checked)return;try{const ctx=new (window.AudioContext||window.webkitAudioContext)();const osc=ctx.createOscillator(),gain=ctx.createGain();osc.frequency.value=freq;osc.connect(gain);gain.connect(ctx.destination);gain.gain.setValueAtTime(.08,ctx.currentTime);gain.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+duration);osc.start();osc.stop(ctx.currentTime+duration);osc.onended=()=>ctx.close();}catch(e){addLog("Áudio não disponível neste navegador.");}}
+function comment(name,message){stats.comments++;stats.people.add(name);addPoints(name,5);addLog(name+' comentou: "'+message+'"');const key=message.trim().toUpperCase();if($("autoReply").checked&&replies[key])addLog("Resposta preparada: "+replies[key]);update();}
+function gift(name){stats.gifts++;addPoints(name,10);addLog(name+" enviou um presente de demonstração 🌹");if($("giftReact").checked){addLog("Reação: efeito de presente ativado!");beep(880,.22);}update();}
+$("simulateComment").onclick=()=>{const name=$("customName").value.trim()||"Visitante "+(stats.people.size+1);const message=$("customComment").value.trim()||samples[Math.floor(Math.random()*samples.length)];comment(name,message);};
+$("simulateGift").onclick=()=>gift($("customName").value.trim()||"Visitante "+(stats.people.size+1));
+$("simulateJoin").onclick=()=>{const name=$("customName").value.trim()||"Visitante "+(stats.people.size+1);stats.people.add(name);addLog(name+" entrou na demonstração.");update();beep(520,.1);};
+$("resetRanking").onclick=()=>{stats.points={};stats.people.clear();update();addLog("Ranking reiniciado.");};
+$("clearLog").onclick=()=>{$("log").innerHTML='<p class="empty">Os eventos de teste aparecerão aqui.</p>';};
+for(let n=1;n<=5;n++){const b=document.createElement("button");b.textContent=n;b.onclick=()=>{if(n===secret){$("gameMessage").textContent="Acertou! 🎉 Novo número sorteado.";beep(990,.3);secret=Math.floor(Math.random()*5)+1;}else{$("gameMessage").textContent=n<secret?"É maior! Tente novamente.":"É menor! Tente novamente.";beep(330,.1);}};$("guessButtons").append(b);}
+if("serviceWorker" in navigator && location.protocol.startsWith("http")){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));}
+update();

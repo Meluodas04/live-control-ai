@@ -1,0 +1,28 @@
+LIVE CONTROL AI — V1.0 (PROTÓTIPO)
+
+O QUE É
+Um painel web instalável (PWA) para Android. Esta versão demonstra a interface, respostas locais simuladas, pontuação, ranking, jogo e efeitos sonoros.
+
+IMPORTANTE
+Esta versão NÃO se conecta ao TikTok. Não captura comentários/presentes reais e não envia mensagens ao chat. Os botões "Simular" geram eventos fictícios para testar a interface. A integração real deve ser feita depois, por meio de uma fonte autorizada e compatível com os termos do TikTok.
+
+ARQUIVOS
+index.html       Estrutura da tela
+style.css        Aparência
+app.js           Lógica do protótipo
+manifest.webmanifest  Configuração de instalação como PWA
+sw.js            Cache para funcionamento offline depois da primeira visita
+
+COMO TESTAR
+1. Hospede estes arquivos em um endereço HTTPS (por exemplo, GitHub Pages).
+2. Abra o endereço no Chrome do Android.
+3. Use o menu do Chrome > "Instalar app" ou "Adicionar à tela inicial".
+4. Abra o ícone LIVE CONTROL AI.
+5. Toque em "Simular comentário", "Simular presente" e "Simular entrada".
+
+OBSERVAÇÃO SOBRE APK
+PWA instalado não é um APK nativo. Para gerar um APK assinado, será necessário empacotar o site usando uma ferramenta de construção Android/TWA ou compilar um projeto Android. Isso será uma etapa posterior; não instale APKs de sites desconhecidos.
+
+PERSONALIZAÇÃO
+As palavras e respostas iniciais estão no objeto "replies" em app.js.
+Os pontos são definidos em addPoints() e gift().

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#101827">
+  <meta name="description" content="Painel de demonstração do LIVE CONTROL AI">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="style.css">
+  <title>LIVE CONTROL AI</title>
+</head>
+<body>
+<header class="top">
+  <div><div class="brand">LIVE CONTROL <span>AI</span></div><small>PAINEL DE INTERAÇÕES • V1.0</small></div>
+  <span class="pill demo" id="connection">MODO DEMONSTRAÇÃO</span>
+</header>
+<main>
+  <section class="hero">
+    <div><p class="eyebrow">CENTRAL DA LIVE</p><h1>Seu painel de<br>interações</h1><p class="muted">Teste as funções sem conectar sua conta TikTok.</p></div>
+    <div class="orb">LIVE<br><b>●</b></div>
+  </section>
+
+  <section class="stats">
+    <article><small>Comentários</small><strong id="commentsCount">0</strong></article>
+    <article><small>Presentes</small><strong id="giftsCount">0</strong></article>
+    <article><small>Participantes</small><strong id="peopleCount">0</strong></article>
+    <article><small>Pontos</small><strong id="pointsCount">0</strong></article>
+  </section>
+
+  <section class="panel">
+    <div class="section-head"><h2>Automações</h2><span class="tag">LOCAL</span></div>
+    <label class="toggle-row"><span><b>Respostas por palavra-chave</b><small>Simula uma resposta quando detectar uma palavra</small></span><input id="autoReply" type="checkbox" checked></label>
+    <label class="toggle-row"><span><b>Reações aos presentes</b><small>Som e pontos em eventos de teste</small></span><input id="giftReact" type="checkbox" checked></label>
+    <label class="toggle-row"><span><b>Efeitos sonoros</b><small>Áudio gerado pelo próprio navegador</small></span><input id="sounds" type="checkbox" checked></label>
+  </section>
+
+  <section class="panel">
+    <div class="section-head"><h2>Simulador de eventos</h2><span class="tag purple">TESTE</span></div>
+    <p class="muted">Toque nos botões para simular o que poderá chegar da live quando a integração estiver pronta.</p>
+    <div class="actions">
+      <button class="primary" id="simulateComment">💬 Simular comentário</button>
+      <button class="gift" id="simulateGift">🎁 Simular presente</button>
+      <button class="soft" id="simulateJoin">👋 Simular entrada</button>
+    </div>
+    <div class="input-line"><input id="customName" maxlength="24" placeholder="Nome do espectador"><input id="customComment" maxlength="80" placeholder="Escreva um comentário"></div>
+  </section>
+
+  <section class="panel">
+    <div class="section-head"><h2>Jogo: adivinhe o número</h2><span class="tag purple">JOGO</span></div>
+    <p class="muted">O número secreto vai de 1 a 5. Escolha uma opção para testar.</p>
+    <div class="guess-row" id="guessButtons"></div>
+    <p id="gameMessage" class="game-message">O jogo está esperando um palpite.</p>
+  </section>
+
+  <section class="panel">
+    <div class="section-head"><h2>Ranking da live</h2><button class="text-button" id="resetRanking">Zerar</button></div>
+    <ol id="ranking" class="ranking"><li class="empty">Ainda não há participantes.</li></ol>
+  </section>
+
+  <section class="panel">
+    <div class="section-head"><h2>Histórico de eventos</h2><button class="text-button" id="clearLog">Limpar</button></div>
+    <div id="log" class="log"><p class="empty">Os eventos de teste aparecerão aqui.</p></div>
+  </section>
+
+  <aside class="notice"><b>Importante:</b> esta versão é um protótipo local. Ela não lê comentários ou presentes reais, não envia mensagens ao TikTok e não controla a live. A conexão real dependerá de uma integração permitida e tecnicamente disponível para sua conta.</aside>
+</main>
+<footer>LIVE CONTROL AI • V1.0 • PROTÓTIPO</footer>
+<script src="app.js"></script>
+</body>
+</html>
